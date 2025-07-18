@@ -1,5 +1,16 @@
 plugins {
+    id 'java'
     id 'application'
+}
+
+mainClassName = 'myfend.Main'  // Aqui você coloca o caminho da sua classe Main com pacote
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'myfend.Main'
+        )
+    }
 }
 
 repositories {
@@ -7,12 +18,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.sparkjava:spark-core:2.9.4'
+    implementation 'com.sparkjava:spark-core:2.9.3'
     implementation 'com.google.code.gson:gson:2.10.1'
 }
 
 application {
-    mainClass = 'myfend.Main'
+    mainClass = mainClassName
 }
 
 java {
