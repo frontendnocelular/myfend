@@ -1,24 +1,13 @@
-# Usa uma imagem com Java 17 e Gradle para buildar seu projeto
-FROM gradle:8.0-jdk17 AS build
-
+# Fase 1: Usa uma imagem com Gradle para construir o projeto
+FROM gradle:8.3-jdk17 AS build
 WORKDIR /app
-
-# Copia todo o seu código para a imagem
 COPY . .
+RUN gradle clean build --no-daemon
 
-# Compila o projeto para gerar o arquivo myfend.jar
-RUN gradle build --no-daemon
-
-# Agora uma imagem menor só pra rodar o jar
+# Fase 2: Usa uma imagem mais leve para rodar só o Java
 FROM openjdk:17-jdk-slim
-
 WORKDIR /app
-
-# Copia o jar gerado para essa imagem
 COPY --from=build /app/build/libs/myfend.jar ./myfend.jar
 
-# Diz que a aplicação vai usar a porta 4567
 EXPOSE 4567
-
-# Comando para rodar o backend
 CMD ["java", "-jar", "myfend.jar"]
