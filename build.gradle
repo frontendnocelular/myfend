@@ -1,14 +1,15 @@
 plugins {
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-mainClassName = 'myfend.Main'  // Aqui você coloca o caminho da sua classe Main com pacote
+mainClassName = 'myfend.Main'
 
 jar {
     manifest {
         attributes(
-            'Main-Class': 'myfend.Main'
+            'Main-Class': mainClassName
         )
     }
 }
@@ -30,4 +31,10 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+}
+
+shadowJar {
+    archiveBaseName.set('myfend')
+    archiveVersion.set('1.0')
+    archiveClassifier.set('')
 }
